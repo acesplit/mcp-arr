@@ -7,6 +7,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [1.6.1] - 2026-04-22
+
+### Added
+- Remote HTTP MCP mode via `MCP_TRANSPORT=http` (with `HOST`, `PORT`, `MCP_PATH` env vars)
+- Generic `search` and `fetch` tools for hosted/remote MCP clients (e.g. ChatGPT connectors)
+- Docker usage examples in the README for both stdio and HTTP mode
+- `limit` / `offset` pagination for:
+  - `sonarr_get_queue`
+  - `radarr_get_queue`
+  - `lidarr_get_queue`
+- `sonarr_refresh_series` and `radarr_refresh_movie` tools for triggering targeted metadata refresh ([#9](https://github.com/aplaceforallmystuff/mcp-arr/pull/9), contributed by [@ismael9291](https://github.com/ismael9291))
+- `limit` / `offset` / `search` pagination for `sonarr_get_series` and `radarr_get_movies` ([#9](https://github.com/aplaceforallmystuff/mcp-arr/pull/9), contributed by [@ismael9291](https://github.com/ismael9291))
+
+### Changed
+- The server now starts in TRaSH-only mode even when no local *arr services are configured
+- Queue responses now include pagination metadata (`total`, `returned`, `hasMore`, `nextOffset`, etc.)
+- Refresh tool responses validate that the target exists before dispatching the command, and echo the resolved `id` / `title` / `year`
+- README and server metadata updated to reflect remote MCP support and current versioning
+
+### Fixed
+- Broken README architecture image path
+- Version drift between `package.json`, `server.json`, and runtime version metadata
+
 ### Removed
 - Readarr (Books) support — replaced by Booklore + Shelfmark in Docker stack
 
