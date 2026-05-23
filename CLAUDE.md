@@ -110,3 +110,7 @@ All *arr services follow similar REST patterns:
 - PUT `/api/v3/{resource}/{id}` - Update
 - DELETE `/api/v3/{resource}/{id}` - Delete
 - POST `/api/v3/command` - Trigger actions (search, refresh, etc.)
+
+## Pre-Publish
+
+Run `/publish-mcp` before any `npm publish` — mandatory pipeline that handles tests, secret scan, sanitize, docs check, version bump, tag, push, and publish in strict order. Do not run `npm publish` directly.
