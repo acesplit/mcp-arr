@@ -10,3 +10,8 @@ dist/
 # Local planning / session handoff notes
 NEXT-SESSION.md
 SESSION-*.md
+
+# Environment files
+.env
+.env.local
+.env.*.local
