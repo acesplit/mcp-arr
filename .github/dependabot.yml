@@ -1,0 +1,60 @@
+version: 2
+
+updates:
+  # --- npm (root package.json / package-lock.json) ---
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 10
+    groups:
+      # The MCP SDK is the one dependency whose breaking changes actually
+      # matter here, so keep it out of the catch-all group and let it raise
+      # its own PR for review.
+      mcp-sdk:
+        patterns:
+          - "@modelcontextprotocol/*"
+      # Everything else (TypeScript, @types/node, etc.) is dev tooling —
+      # bundle patch/minor bumps into one PR to cut down on noise.
+      dev-dependencies:
+        dependency-type: "development"
+        update-types:
+          - "minor"
+          - "patch"
+    commit-message:
+      prefix: "chore(deps)"
+      include: "scope"
+    labels:
+      - "dependencies"
+      - "npm"
+
+  # --- GitHub Actions (workflow files) ---
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    groups:
+      github-actions:
+        patterns:
+          - "*"
+    commit-message:
+      prefix: "chore(ci)"
+      include: "scope"
+    labels:
+      - "dependencies"
+      - "github-actions"
+
+  # --- Docker (Dockerfile base image: node:20-alpine) ---
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    commit-message:
+      prefix: "chore(docker)"
+      include: "scope"
+    labels:
+      - "dependencies"
+      - "docker"
